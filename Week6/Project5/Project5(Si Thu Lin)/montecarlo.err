@@ -1,0 +1,237 @@
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 1024
+Number of Trials =       1024, MegaTrials/Second =    32.2581
+
+Probability = 41.406 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 2048
+Number of Trials =       2048, MegaTrials/Second =    80.0000
+
+Probability = 41.309 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 4096
+Number of Trials =       4096, MegaTrials/Second =   142.8571
+
+Probability = 40.845 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 8192
+Number of Trials =       8192, MegaTrials/Second =   285.7143
+
+Probability = 41.626 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 16384
+Number of Trials =      16384, MegaTrials/Second =   533.3333
+
+Probability = 41.931 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 32768
+Number of Trials =      32768, MegaTrials/Second =   925.0225
+
+Probability = 42.123 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 65536
+Number of Trials =      65536, MegaTrials/Second =  1618.9724
+
+Probability = 42.157 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 131072
+Number of Trials =     131072, MegaTrials/Second =  2536.2230
+
+Probability = 41.800 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 262144
+Number of Trials =     262144, MegaTrials/Second =  4371.3982
+
+Probability = 42.086 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 524288
+Number of Trials =     524288, MegaTrials/Second =  4969.3662
+
+Probability = 42.014 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 1048576
+Number of Trials =    1048576, MegaTrials/Second =  7433.7567
+
+Probability = 42.070 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+fatbinary fatal   : Could not open output file '/tmp/tmpxft_00008142_00000000'
+Blocksize is 16 and Number of trials is 1048576
+Number of Trials =    1048576, MegaTrials/Second =  7375.1968
+
+Probability = 42.006 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 4194304
+Number of Trials =    4194304, MegaTrials/Second =  8826.9919
+
+Probability = 42.025 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 8388608
+Number of Trials =    8388608, MegaTrials/Second =  9209.6681
+
+Probability = 42.018 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 16 and Number of trials is 16777216
+Number of Trials =   16777216, MegaTrials/Second =  9426.2496
+
+Probability = 42.029 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 1024
+Number of Trials =       1024, MegaTrials/Second =    34.4828
+
+Probability = 40.234 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 2048
+Number of Trials =       2048, MegaTrials/Second =    71.4286
+
+Probability = 43.018 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 4096
+Number of Trials =       4096, MegaTrials/Second =   148.1481
+
+Probability = 41.357 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 8192
+Number of Trials =       8192, MegaTrials/Second =   275.8621
+
+Probability = 41.602 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 16384
+Number of Trials =      16384, MegaTrials/Second =   571.4286
+
+Probability = 42.328 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 32768
+Number of Trials =      32768, MegaTrials/Second =  1032.2581
+
+Probability = 42.102 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 65536
+Number of Trials =      65536, MegaTrials/Second =  1891.0434
+
+Probability = 41.528 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 131072
+Number of Trials =     131072, MegaTrials/Second =  3531.0345
+
+Probability = 41.982 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 262144
+Number of Trials =     262144, MegaTrials/Second =  5587.9946
+
+Probability = 42.001 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 524288
+Number of Trials =     524288, MegaTrials/Second =  9220.0336
+
+Probability = 42.111 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 1048576
+Number of Trials =    1048576, MegaTrials/Second =  9878.8058
+
+Probability = 42.076 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 2097152
+Number of Trials =    2097152, MegaTrials/Second = 13908.3191
+
+Probability = 42.045 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 4194304
+Number of Trials =    4194304, MegaTrials/Second = 16580.8984
+
+Probability = 42.038 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 8388608
+Number of Trials =    8388608, MegaTrials/Second = 17646.8527
+
+Probability = 42.028 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 32 and Number of trials is 16777216
+Number of Trials =   16777216, MegaTrials/Second = 18420.6309
+
+Probability = 42.020 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 1024
+Number of Trials =       1024, MegaTrials/Second =    41.6667
+
+Probability = 43.848 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 2048
+Number of Trials =       2048, MegaTrials/Second =    74.0741
+
+Probability = 43.604 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 4096
+Number of Trials =       4096, MegaTrials/Second =   142.8571
+
+Probability = 42.163 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 8192
+Number of Trials =       8192, MegaTrials/Second =   296.2963
+
+Probability = 42.444 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 16384
+Number of Trials =      16384, MegaTrials/Second =   380.9524
+
+Probability = 41.620 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 32768
+Number of Trials =      32768, MegaTrials/Second =  1024.0000
+
+Probability = 42.490 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 65536
+Number of Trials =      65536, MegaTrials/Second =  2043.9123
+
+Probability = 41.866 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 131072
+Number of Trials =     131072, MegaTrials/Second =  3846.0095
+
+Probability = 41.869 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+
+Blocksize is 64 and Number of trials is 262144
+Number of Trials =     262144, MegaTrials/Second =  7019.7084
+
+Probability = 41.980 %
+montecarlo.cu(102): warning: variable "outx" was declared but never referenced
+

@@ -1,0 +1,134 @@
+08:33:02	 From Green, Daniel D : Is there a Slack workspace for this class?
+08:33:33	 From Duong, Nhu : There is a unofficial discord channel
+08:33:34	 From Darius Moseley : is this being recorded so we can watch it after as well?
+08:34:14	 From inyongkim : it won’t be recorded
+08:34:27	 From Krishna, Ajay : Can somebody post an invite to the discord channel?
+08:34:30	 From Luu, Phi : I think we'll all need to make one
+08:34:53	 From Bishop, Anthony Patrick : you think he knows hes muted?
+08:35:03	 From Green, Daniel D : he heard you
+08:36:14	 From Bishop, Anthony Patrick : heres that discord link for whoever wanted it https://discord.gg/UgDX7R 
+08:36:16	 From Green, Daniel D : If I make an channel in Slack for this class in the COE Hub workspace then everyone can access it without an invite.
+08:36:41	 From Olsen, Carter J : yes
+08:36:42	 From Jayapathy, Swetha : yes
+08:36:42	 From JT (Chia-Tse Weng) : yes
+08:36:42	 From Bishop, Anthony Patrick : yep
+08:36:42	 From Foreman, Juwan K : yes
+08:36:45	 From Luu, Phi : Yes
+08:36:47	 From Kevin : yes
+08:36:48	 From Green, Daniel D : just a homework doc
+08:36:49	 From Zhang, Tian : yes
+08:36:51	 From Hongjin Wang : yes
+08:39:01	 From Bishop, Anthony Patrick : can you record this before you start talking about the midterm rules?
+08:39:17	 From Green, Daniel D : https://join.slack.com/share/zt-e1wmmwzl-KHp6fj16KEXo3ocKBEnHhg
+
+Slack space for this class, doesn't require an invite, just an osu email.
+08:39:21	 From Eddie Breding : yeah a recording would be nice
+08:39:29	 From Duong, Nhu : https://discord.gg/UgDX7R
+08:42:52	 From blake hudson : your slack channel had a cap to how many people can join the link
+08:43:05	 From Ochoa-Botello, Manuel : ^
+08:43:42	 From blake hudson : But the discord server is a good spot too for community help
+08:44:01	 From Olsen, Carter J : yse
+08:44:01	 From Luu, Phi : Yes
+08:44:04	 From Kevin : yes
+08:44:06	 From Nikitin, Anton : нуы
+08:44:06	 From blake hudson : yes
+08:44:07	 From Alexandra Thompson : Yes
+08:44:07	 From Luu, Phi : But you have some echo
+08:44:08	 From Nikitin, Anton : yes
+08:44:09	 From Jared Gaskin : You’ve got an echo,
+08:44:10	 From JT (Chia-Tse Weng) : yes but you have echo
+08:44:13	 From Rebecca Croysdale : echo
+08:44:20	 From Green, Daniel D : echo
+08:44:29	 From Jared Gaskin : echooooooo
+08:45:12	 From Kevin : yes
+08:45:20	 From Chen, Chun-Yu : echoooooooooooo
+08:45:23	 From Green, Daniel D : why are you in a cave?
+08:45:30	 From Jared Gaskin : lol
+08:45:30	 From Kevin : hahaha
+08:45:42	 From Friedman, Benjamin Wilson : you can mute yourself on the iPad
+08:45:53	 From Kevin : great
+08:45:53	 From Alexandra Thompson : Better
+08:45:53	 From Al-Zubieri, Wael : Probably because two mics are picking up audio with different latency
+08:45:54	 From Luu, Phi : Good
+08:45:56	 From Olsen, Carter J : better
+08:45:56	 From JT (Chia-Tse Weng) : better
+08:45:57	 From Kevin : good 
+08:46:01	 From Ochoa-Botello, Manuel : Daniel can you post a another invite for Slack
+08:46:25	 From Bishop, Anthony Patrick : recording?
+08:48:04	 From Green, Daniel D : https://join.slack.com/share/zt-e1wmmwzl-KHp6fj16KEXo3ocKBEnHhg
+08:48:15	 From Green, Daniel D : Its a channel in the official COE Hub Workspace
+08:48:28	 From Green, Daniel D : you can also find it by searching for 471-spring-2020
+08:48:30	 From Sakthivel, Sachin : Is midterm open note?
+08:48:34	 From Green, Daniel D : *472
+08:48:50	 From Nieh, Shu-Kan : Are we going to test the concept of "delay slot"?Should we know the pipeline of it?
+08:48:52	 From Jayapathy, Swetha : Can we get more practice problems?
+08:48:56	 From Johnsen, Caden David : Do we have to enable our cameras or audio during the test?
+08:49:04	 From Alrabiah, Thekra Abdullah I : how many question ?
+08:49:07	 From Ben Johnson : will we need to scan in written answers or is it a canvas quiz?
+08:49:25	 From Kevin : 6 questions and 1 extra credit question
+08:49:33	 From Alexandra Thompson : Is the midterm format similar to the homework with multiple choice, short answer, etc?
+08:50:05	 From Jared Gaskin : Will we be able to explain our reasoning on the midterm problems? or is it just multiple choice?
+08:50:13	 From Tommy Liao : will there be partial credit?
+08:51:01	 From Yuan, Tianle : can we get the authority for screen recording?
+08:51:25	 From Alrabiah, Thekra Abdullah I : can I open my exam at noon ? I do not like morning time
+08:51:28	 From Wu, Mingdong : Do all of us need to go to zoom when we start the midterm?
+08:53:05	 From Alrabiah, Thekra Abdullah I : is there a question that has more than one answer?
+08:53:35	 From Ochoa-Botello, Manuel : Exam is from 8am to 950am?
+08:54:31	 From Jared Gaskin : Will there will a way for you to provide clarifications during the exam if someone finds an error?
+08:55:17	 From blake hudson : ask on zoom?
+08:55:50	 From Alrabiah, Thekra Abdullah I : can we have another 10 min
+08:56:24	 From Rey-Rosa, Mateo S : What should we do if our internet drops during the test
+08:58:23	 From Rawson, Brandon Robert : Xfinity in Corvallis was on and off last week. Sometimes down for a couple hours
+08:58:33	 From Jayapathy, Swetha : Can you please provide the solution document for Homework 1 and Homework2 in Canvas
+08:58:34	 From inyongkim : yes
+08:58:36	 From Wu, Mingdong : Yes, some community’s network is always broken, it is really bad.
+08:58:37	 From Rawson, Brandon Robert : Could potentially answer questions through your phone though
+08:58:47	 From Ortega, Drew S : Can you go over the timing comparison problem from the homework where we rank the timings
+08:59:22	 From Beresford, Braam McGreal : can we not worry about problems that have not occurs yet?
+08:59:44	 From Andrew Victor : ^
+09:00:15	 From Wu, Ching-Fang : Agree with Beresford
+09:00:38	 From Jianfei Chen : My Internet was down last night
+09:00:43	 From Olsen, Carter J : Yes people let's move on to the homework solutions
+09:01:15	 From Green, Daniel D : seriously this is a waste of time
+09:01:36	 From Rebecca Croysdale : agreed
+09:01:54	 From ABDULLAH : For internet issues and time difference between countries. Could you please make the availability of the exam whole the day and still  80 minutes? 
+09:05:32	 From Alrabiah, Thekra Abdullah I : on exam, do we have a question like question two  (code) on HW1?
+09:05:50	 From Alrabiah, Thekra Abdullah I : ok
+09:11:36	 From Todankar, Diksha Pritam : so for things running in parallel, we pick the longer time?
+09:11:48	 From Olsen, Carter J : Will the critical path always be the load instruction?
+09:13:50	 From Jared Gaskin : So a mux’s 10ps can be “absorbed” once the mux has all three inputs
+09:13:57	 From Jared Gaskin : ?
+09:16:20	 From Wu, Shou-Cheng :  Cause we only know that if the first six bits are 0, we can know it is a R-type. What about else?
+09:19:24	 From Wu, Shou-Cheng : ok thank you.
+09:20:54	 From Hongjin Wang : what's the difference between branch taken and stall-on-branch
+09:23:03	 From Berwick, Jacob Nicholas : how many instructions should we look back for dependence?
+09:24:20	 From Berwick, Jacob Nicholas : even if 10 or something are in between it would still be a dependence?
+09:26:32	 From blake hudson : do branches or conditionals need to access data memory?
+09:28:24	 From Sakthivel, Sachin : Does the forwarding occur from the pipeline register to the next instructions execute stage because I see the forwarding unit data line in the mem stage.
+09:29:13	 From Ochoa-Botello, Manuel : So this problem had both of the forwarding? Ex -> ALU AND MEM/WB -> ALU?
+09:33:48	 From Green, Daniel D : so the answer was 1% yes?
+09:34:10	 From Jared Gaskin : ^the answer was 1.16
+09:34:42	 From Huynh, Mark : Could you explain how you were able to determine the number of cycles from the assembly instruction quickly?
+09:36:26	 From Lin, Si Thu : Is it possible to move the AND gate from MEM to EX?
+09:37:14	 From Lin, Si Thu : Then there will be only two bubbles before the right instruction is fetched.
+09:39:09	 From Huynh, Mark : gotcha, thanks
+09:39:30	 From Hongjin Wang : what's the difference between branch taken and stall-on-branch
+
+09:41:32	 From Green, Daniel D : What do you mean by"branch result is null"?
+09:43:03	 From blake hudson : is there a bubble that needs to be inserted if youre using branch taken? Because you still need to decode the target address?
+09:43:17	 From Nawaz, Usman : what do you mean by flushed instruction?
+09:44:29	 From Berwick, Jacob Nicholas : I'm a bit confused why RegWrite is deasserted, what if the previous instruction before the branch needs to write to the register, wouldn't that write not occur?
+09:45:06	 From Luu, Phi : So we don't need to deassert the control signals prior to the MEM stage (ALUSrc, ALUOp, RegDst) because the next instruction is going to overwrite them anyways?
+09:46:02	 From Todankar, Diksha Pritam : so we are only flushing the instruction that immediately follows the branch? what about the instructions that come after that?
+09:46:07	 From Chen, Leu-An : could your explain why there is no need to choose MemRead and  ALUSrc? 
+09:49:49	 From Hua, Andy : Double checking. 3.4 and 3.5 will not be on exam?
+09:49:54	 From Olsen, Carter J : yes
+09:50:28	 From Jared Gaskin : So…for 4.2, the answer on the canvas quiz was set to 18???
+09:50:47	 From Jared Gaskin : but it says 19 right there?
+09:50:57	 From Dindukurthi, Chetan : This is branch assume not taken
+09:51:05	 From Dindukurthi, Chetan : That was branch assume taken
+09:53:48	 From Olsen, Carter J : my question said assume not taken
+09:53:57	 From Ochoa-Botello, Manuel : Branch is able to start right after because there is forwarding, is that what you said?
+09:54:35	 From Foreman, Juwan K : My question said assume not taken too
+09:54:55	 From inyongkim : Mine is ‘taken’
+09:55:43	 From Lin, Si Thu : Do we assume that the AND gate is in the EX Stage?

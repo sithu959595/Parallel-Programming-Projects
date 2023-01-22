@@ -1,0 +1,261 @@
+<html>
+<head>
+
+<title>
+CS 475/575 Project #5
+</title>
+
+</head>
+
+<body background="../backgr.jpg">
+
+<center>
+<img src="../osu.jpg" align=center>
+<h2>CS 475/575 -- Spring Quarter 2020</h2>
+<h2>Project #5</h2>
+<h3>CUDA Monte Carlo</h3>
+<h3>100 Points</h3>
+<h3>Due: May 20</h3>
+</center>
+
+
+<p>
+<hr size=4 >
+<p>
+
+<i>This page was last updated: May 6, 2020</i>
+
+
+<!--
+<p>
+<hr size=4>
+<p>
+
+<center>
+<img src="../underconstr.gif">
+<br>
+<font size=+2 color=#ff0000>
+<blink>
+<b> 
+Under Construction:
+<br>
+This content is not final until you see this message go away!
+</b>
+</blink>
+</font>
+</center>
+
+-->
+
+<p>
+<hr size=4>
+<p>
+
+<font color=#ff0000>
+<b>
+Note:
+The flip machines do not have GPU cards in them, so CUDA will not run there.
+If your own system has a GPU, you can use that.
+You can also use the DGX machine, but please be good about sharing it.
+</b>
+</font>
+
+
+
+<p>
+<hr size=4>
+<p>
+
+<h3>Introduction</h3>
+
+
+<p>
+Monte Carlo simulation is used to determine the range of outcomes
+for a series of parameters, each of which has a probability distribution
+showing how likely each option is to happen.
+In this project, you will take a scenario and develop a Monte Carlo simulation of it,
+determining how likely a particular output is to happen.
+
+<p>
+<h3>The Scenario</h3>
+
+<p>
+<a href="MonteCarloLaser.jpg"><img src="MonteCarloLaser.thumb.jpg"></a>
+<p>
+A laser is pointed at a circle (circle, in this case).
+The circle is defined by  a center point (xc,yc) and a radius (r).
+The beam comes out at a 30&deg; angle.
+It bounces off the circle.
+Underneath, even with the laser origin, is an infinite plate.
+Given all of this, does the beam hit the plate?
+
+<p>
+Normally this would be a pretty straightforward geometric calculation, but the circle is randomly changing
+location and size.
+So now, the laser beam might hit the plate or it might not, depending on the values of (xc, yc, r ).
+OK, since it is not certain, what is the <i>probability</i> that it hits the plate?
+This is a job for GPU Monte Carlo simulation!
+
+<p>
+Because of the variability, the beam could miss the circle entirely (A).
+The circle might totally engulf the laser pointer (B).
+It could bounce off the circle and miss the plate entirely (C).
+Or, it could bounce off the circle and actually hit the plate (D).
+
+<p>
+So, now the question is "What is the <i>probability</i> that the beam hits the plate?".
+
+
+<h3>In My Opinion, Here Is How To Make Your Life Way, Way, Way Easier</h3>
+
+<p>
+IMHO, use Linux for this project.
+The compilation is orders of magnitude simpler,
+and you can try this out on OSU's new DGX system,
+which will produce dazzling performances.
+
+<p>
+Also, before you use the DGX, do your development on the <i>rabbit</i> system
+(Slide #3 of the DGX noteset).
+It is a little friendlier because you don't have to run your program through a batch submission.
+But, don't take any final performance numbers from <i>rabbit</i>,
+just get your program running there.
+
+
+<h3>But, if you decide to use Visual Studio on your own machine, you must first install the CUDA Toolkit!</h3>
+
+<p>
+If you are trying to run CUDA on your own Visual Studio system, make sure your machine has the
+CUDA toolkit installed.  It is available here:
+
+<a href="https://developer.nvidia.com/cuda-downloads">https://developer.nvidia.com/cuda-downloads</a>
+
+
+
+<p>
+<h3>Requirements:</h3>
+
+<p>
+<ol>
+
+<p>
+<li>
+The ranges are:
+<table border=1>
+<tr><th>Variable<th>Range
+<tr><td>xc<td>0 0 - 2.0
+<tr><td>yc<td>0 0 - 2.0
+<tr><td>r<td>0.5 - 2.0
+</table>
+
+<p>
+<b>Note: these are not the same numbers as we used before!</b>
+
+<p>
+<li>
+Run this for four BLOCKSIZEs (i.e., the number of threads per block) of 16, 32, 64, and 128,
+combined with NUMTRIALS sizes of 16K, 32K, 64K, 128K, 256K, 512K, and 1M.
+
+<p>
+<li>
+Be sure the NUMTRIALS are in multiples of 1024, that is, for example, use 32,768, not 32,000.
+
+<p>
+<li>
+Record timing for each combination.
+For performance, use some appropriate units like MegaTrials/Second or GigaTrials/Second.
+
+<p>
+<li>
+For this one, use CUDA timing, not OpenMP timing.
+
+<p>
+<li>
+Do a table and two graphs:
+<ol>
+<li>Performance vs. NUMTRIALS with multiple curves of BLOCKSIZE
+<li>Performance vs. BLOCKSIZE with multiple curves of NUMTRIALS
+</ol>
+
+<p>
+<li>
+Like before, fill the <b>Xcs</b>, <b>Ycs</b>, and <b>Rs</b> arrays ahead of time.
+Send them to the GPU where they can be used as look-up tables.
+
+<p>
+<li>
+A template of what the code could look like can be found in the
+<a href="./montecarloTemplate.cu">montecarloTemplate.cu</a> file.
+
+<p>
+<li>
+You will also need six .h files:
+<ul>
+<li><a href="helper_functions.h">helper_functions.h</a>
+<li><a href="helper_cuda.h">helper_cuda.h</a>
+<li><a href="helper_image.h">helper_image.h</a>
+<li><a href="helper_string.h">helper_string.h</a>
+<li><a href="helper_timer.h">helper_timer.h</a>
+<li><a href="exception.h">exception.h</a>
+</ul>
+
+
+<p>
+<li>
+Your commentary PDF should:
+<ol>
+<li>Tell what machine you ran this on
+<li>Show the table and the two graphs
+<li>What patterns are you seeing in the performance curves?
+<li>Why do you think the patterns look this way?
+<li>Why is a BLOCKSIZE of 16 so much worse than the others?
+<li>How do these performance results compare with what you got in Project #1?  Why?
+<li>What does this mean for the proper use of GPU parallel computing?
+</ol>
+
+
+</ol>
+
+
+<!--
+<p>
+<h3>Running CUDA in Visual Studio</h3>
+
+<p>
+Get the
+<a href="CudaArrayMulReduce2017.zip">CudaArrayMulReduce2017.zip</a>
+file.
+Un-zip the file and double-click on the .sln file.
+This is the CUDA equivalent of the OpenCL array-multiply-and-reduce program.
+Modify it for this assignment.
+
+
+<p>
+<h3>Running CUDA in Linux (including <i>rabbit</i>)</h3>
+
+<p>
+Get the
+<a href="CudaArrayMulReduce.tar">CudaArrayMulReduce.tar</a>
+file.
+Un-tar the file and type <b>make</b>.
+This is the CUDA equivalent of the OpenCL array-multiply-and-reduce program.
+Modify it for this assignment.
+-->
+
+
+<p>
+<h3>Grading:</h3>
+
+<p>
+<table border=1>
+<tr><th>Feature<th>Points
+<tr><td>Monte Carlo performance table<td align=right>20
+<tr><td>Graph of performance vs. NUMTRIALS with multiple curves of BLOCKSIZE<td align=right>25
+<tr><td>Graph of performance vs. BLOCKSIZE with multiple curves of NUMTRIALS<td align=right>25
+<tr><td>Commentary<td align=right>30
+<tr><th align=left>Potential Total<th align=right>100
+</table>
+
+
+</body>
+</html>

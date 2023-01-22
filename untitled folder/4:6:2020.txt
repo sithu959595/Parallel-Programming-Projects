@@ -1,0 +1,89 @@
+09:13:27	 From Bishop, Anthony Patrick : so we basically shift right by 2
+09:13:30	 From Bishop, Anthony Patrick : ?
+09:13:58	 From Faaiq Waqar : @anthony yes
+09:13:58	 From Foshay, Isak : yeah
+09:14:20	 From Bishop, Anthony Patrick : but if we want to shift right shouldn't we divide by 4, not multiply
+09:14:29	 From Faaiq Waqar : we shift left
+09:14:35	 From Faaiq Waqar : so we have two 00 at end
+09:14:48	 From Foshay, Isak : lol yeah shift left
+09:15:00	 From Foshay, Isak : little endian vs big endian be like
+09:15:04	 From Faaiq Waqar : lol
+09:15:29	 From Bishop, Anthony Patrick : yeah I don't understand
+09:16:01	 From Bishop, Anthony Patrick : we're trying to strip off the 00 at the 0-1 bits since they are redundant
+09:16:40	 From Faaiq Waqar : No we want to add 00s at the LSBs, because each inst takes 4 bytes (32 bits)
+09:16:51	 From Aditya Kothari : why do we PC+4 and not PC*4?
+09:17:02	 From Faaiq Waqar : and they will begin at sets of 4 bytes ie. 0100
+09:17:08	 From Bunch, Ian Daniel : It increments
+09:17:23	 From blake hudson : PC+4 is to load next instruction if it was incrementing without jumping or branching
+09:17:57	 From Aditya Kothari : so PC+4Bytes?
+09:18:05	 From Bunch, Ian Daniel : yes
+09:18:17	 From Aditya Kothari : cool
+09:20:02	 From Victor Agostinelli : 4 bytes
+09:20:12	 From Bunch, Ian Daniel : 4 bytes = 32 bits
+09:21:38	 From Bishop, Anthony Patrick : 4 is decimal
+09:21:46	 From Victor Agostinelli : The next instruction is 4 bytes away, that is why you add 4
+09:21:49	 From Bishop, Anthony Patrick : so add binary 0100
+09:22:03	 From Bunch, Ian Daniel : It loads the next 32 bit instruction
+09:22:42	 From blake hudson : I think if you think of it. If you think of how many bits or bytes are stored in each register. your trying to access the memory for the next instruction. Which would be current address + the amount of space to skip = to get to next instruction address
+09:22:43	 From Bishop, Anthony Patrick : its decimal 4
+09:22:54	 From Aditya Kothari : why not PC+1?
+09:23:17	 From Faaiq Waqar : Bc the size of the operation is 32 bit each, otherwise the pc would be mid instruction
+09:23:29	 From Bishop, Anthony Patrick : memory cells are 8 bits 
+09:23:29	 From Lin, Yu-Yen : so is there different instructions that add different numbers to the PC?
+09:23:45	 From Bunch, Ian Daniel : PC holds the address for the instruction. You want to move forward 32 bits.
+09:23:55	 From Foshay, Isak : it's coming back to me. The knowledge is coursing through my veins
+09:24:05	 From Aditya Kothari : oh understood!
+09:24:07	 From Aditya Kothari : thanks
+09:24:08	 From Bishop, Anthony Patrick : so you need 4 of the 8bit cells to have a full instruction, and each memory address points to a 8 bit cell
+09:24:10	 From Victor Agostinelli : PC+1 was used in 375 because we operated in an 8 bit system, so the next instruction would only be a byte away
+09:24:24	 From Ben Johnson : are we saying a word is 8 bits or 32 bits?
+09:24:29	 From Bishop, Anthony Patrick : 32 bits
+09:24:32	 From Victor Agostinelli : 32 bits
+09:24:52	 From Lin, Yu-Yen : okay thanks!
+09:24:53	 From Bunch, Ian Daniel : 32 bits per instruction. 8 bits per byte
+09:24:57	 From Bishop, Anthony Patrick : size of a word varies based on what the system is
+09:25:02	 From Foshay, Isak : ^
+09:25:02	 From Bunch, Ian Daniel : = 4 bytes per instruction
+09:25:03	 From Bishop, Anthony Patrick : but byte is universal
+09:25:35	 From Bishop, Anthony Patrick : memory cells are always 8 bits no matter what the system I think because that's just how we build them
+09:25:54	 From Bishop, Anthony Patrick : its one of those work around what the manufacturers do
+09:31:26	 From Foshay, Isak : and the reason for this is because the opcode is taking up bits so you have to use what bits are already in PC for the top 4 bits
+09:33:41	 From Aditya Kothari : how do lw/sw occur in 1 cycle?
+09:34:11	 From Aditya Kothari : on the digram 
+09:35:34	 From Lin, Si Thu : What is the control signal for?
+09:35:38	 From Aditya Kothari : oh okay
+09:37:42	 From Lin, Si Thu : Thank you so much
+09:39:04	 From Foshay, Isak : another question here
+09:40:11	 From Aditi Lole : I too have the same question.
+09:41:31	 From Aditi Lole : thanks 
+09:42:12	 From Faaiq Waqar : Because the Instruction size of mips is 32 bits, unlike our 8 bit one from 375, you have more space to specify destination. That's why you don't just put it back into the first one in mips unlike avr
+09:42:42	 From Foshay, Isak : ^ thanks that is why I was confused. bless up fam
+09:43:24	 From Foshay, Isak : more info on R, I, and J formats: https://en.wikibooks.org/wiki/MIPS_Assembly/Instruction_Formats 
+09:44:27	 From Mingdong Wu : I am little confused about last page about what does 0 17 18 mean
+09:46:45	 From Bishop, Anthony Patrick : im a little bothered by the fact that s and t registers only cover registers 8-23
+09:46:46	 From Yuan, Tianle : what is the range?
+09:46:58	 From Mingdong Wu : OK,I got it, thank you
+09:46:59	 From Yuan, Tianle : okok
+09:47:02	 From Yuan, Tianle : thx
+09:47:20	 From Bishop, Anthony Patrick : t0-7 map to r8-15
+09:47:48	 From blake hudson : I think $s0-$s8 is 16-23
+09:48:08	 From blake hudson : $to-$t8 is 8-15
+09:48:16	 From Nguyen, Martin : rt is for register target, according to the documentation linked earlier in chat
+09:48:20	 From Bishop, Anthony Patrick : but what about the remaining registers
+09:48:26	 From kingsleychukwu : what is shamt? Sorry I missed it
+09:48:31	 From Faaiq Waqar : shift amount
+09:48:35	 From Bishop, Anthony Patrick : 0-7 and 24-31
+09:49:11	 From kingsleychukwu : Shift amount of what?
+09:49:30	 From Lin, Yu-Yen : what does the 8(rd) mean here?
+09:49:44	 From Foshay, Isak : rs register source, rt register target, rd register destination.
+09:49:53	 From kingsleychukwu : Okay. Thank you.
+09:50:03	 From Lin, Yu-Yen : on this page
+09:50:10	 From Aditi Lole :  I have a doubt - rt is  a source register or target register ?
+09:50:15	 From sabrina : thanks
+09:50:31	 From Nguyen, Martin : " Interestingly, rather than rs and rt being named r1 and r2 (for source register 1 and 2), the registers were named "rs" and "rt" for register source, register target and register destination."
+09:50:53	 From Lin, Si Thu : If the memory address length is 32 bits, does it mean that there are 2^32 addresses in the memory?
+09:51:17	 From Aditi Lole : thanks 
+09:54:02	 From Chen, Yu-Wen : So for the jump operation, it is only 4 bits or 6?
+09:54:08	 From Lin, Si Thu : Thank you so much
+09:54:10	 From Victor Agostinelli : thank you Dr. Chen
+09:54:18	 From Foshay, Isak : 6 bits for the opcode

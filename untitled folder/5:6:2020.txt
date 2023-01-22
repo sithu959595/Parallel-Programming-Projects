@@ -1,0 +1,19 @@
+09:13:15	 From Bunch, Ian Daniel : On slide #9, there is a graph with two lines: Trac and Tcac. What do they mean?
+09:14:34	 From Chen, Lizhong : they are a bit complicated to explain as they touch on more advanced DRAM concepts, but you can read more here: http://www.cs.albany.edu/~sdc/CSI404/dramperf.pdf
+09:23:44	 From Wen, Yang : Good morning, Professor. Could you explain controller delay again in Page 14?
+09:25:33	 From Chen, Lizhong : the controller delay includes several control overheads, for example, there must be a circuit block that generates signal to "tell" how/where the arm should move
+09:25:52	 From Chen, Lizhong : when to start data transfer, etc.
+09:26:52	 From Wen, Yang : I see. Thank you.
+09:32:30	 From Chen, Lizhong : sorry, I didn't hear clearly... could you please repeat your question?
+09:40:54	 From Jayapathy, Swetha : Hi, Could you please explain why we do the reciprocal while calculating the rotational latency? 1/250
+09:41:57	 From Jayapathy, Swetha : okay got it
+09:42:01	 From Jayapathy, Swetha : thanks
+09:43:42	 From Bunch, Ian Daniel : For transfer time, it says 512B/100MB/s= 0.005ms transfer time. shouldn't it be 5.12us?
+09:43:54	 From Wen, Yang : Professor, Why does usually find the sector in half a circle?
+09:44:45	 From Bunch, Ian Daniel : but why ms, not us?
+09:46:27	 From Wen, Yang : Okay, thanks
+09:46:37	 From Bishop, Anthony Patrick : can you explain the 1/2 in rotational latency calculation again
+09:46:57	 From Bunch, Ian Daniel : Oh, nevermind I'm just reading it wrong.
+09:47:44	 From Bishop, Anthony Patrick : so we average as always having to travel the full circle
+09:47:53	 From Bishop, Anthony Patrick : when there are times we travel barely at all or the whole circle
+09:49:50	 From Lytikov, Daniil : Hello Can you explain how wear leveling works?

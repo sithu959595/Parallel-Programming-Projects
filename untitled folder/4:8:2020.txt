@@ -1,0 +1,65 @@
+09:03:28	 From Insley, Matthew James : no
+09:03:36	 From Li-Te (John) Huang : no
+09:03:50	 From Thompson, Alexandra : nope
+09:03:54	 From Beresford, Braam McGreal : Are these considered optional if we feel like we understood all the content?
+09:04:11	 From Beresford, Braam McGreal : Thank you
+09:04:16	 From Sakthivel, Sachin : Can we go over the jump instruction
+09:04:23	 From Sakthivel, Sachin : and the concatenation part that was explained in the video
+09:04:27	 From Sakthivel, Sachin : I didn't really understand that
+09:04:48	 From Kim, In Yong : can I record this QnA session?
+09:04:56	 From Foshay, Isak : Question and comments on the video over here once you are done with this question
+09:05:35	 From Kim, In Yong : Oh, okay
+09:07:03	 From Sakthivel, Sachin : why do we do this?
+09:07:13	 From Beresford, Braam McGreal : Can I ask a question about the ALU?
+09:07:44	 From Waqar, Faaiq Gohar : how to we concat the lines for jump in the architechture, the diagram with the bit lables confused me a bit
+09:07:45	 From Foshay, Isak : Sachin it is for jumping to say a function
+09:08:12	 From Sakthivel, Sachin : I understand what the jump instruction works, its just the concatenation part seems abritrary
+09:08:30	 From Wu, Shou-Cheng : could you explain more about the first four bits about jumps
+09:08:30	 From Sakthivel, Sachin : how*
+09:09:30	 From Foshay, Isak : Shou-Cheng, the first four bits are the opcode to tell the cpu that we are doing a jump
+09:09:45	 From Foshay, Isak : 6 bits I mean
+09:09:54	 From Wu, Shou-Cheng : ok Thanks. 
+09:10:04	 From Wu, Shou-Cheng : understand
+09:10:28	 From Foshay, Isak : That's why we can't jump anywhere, because we have to have some bits for the opcode
+09:10:54	 From Wu, Shou-Cheng : ok i see. Thanks
+09:10:57	 From Schatz, Matthew Joseph : is hw1 posted? I see hw2 but not 1...
+09:11:04	 From Foshay, Isak : hw1 is locked until 5pm
+09:11:13	 From Foshay, Isak : :thinking:
+09:11:49	 From Schatz, Matthew Joseph : ^thank you
+09:12:37	 From Waqar, Faaiq Gohar : Ah I see, thank you
+09:15:55	 From Zhang, Andy : There is an empty HW 2 folder
+09:15:59	 From Zhang, Andy : on canvas
+09:17:44	 From Kothari, Aditya Dilip : For R format instruction, where is the funct part of the instruction?
+09:17:57	 From Bunch, Ian Daniel : at the end
+09:18:06	 From Kothari, Aditya Dilip : on the data path?
+09:18:24	 From Kothari, Aditya Dilip : does it go to from control to ALU control?
+09:19:02	 From Foshay, Isak : ^ good question
+09:19:03	 From Kothari, Aditya Dilip : or How does ALU control lookup funct part of R format instruction?
+09:19:11	 From Bunch, Ian Daniel : Instruction [5-0] enters ALU control
+09:19:43	 From Kothari, Aditya Dilip : oh got it
+09:19:46	 From Kothari, Aditya Dilip : thank you!
+09:20:39	 From Li, Jia Yi : R-type, where does shamt[10:6] go?
+09:22:00	 From Yuan, Qingxiao : is that pc+4 means cpu pick the first 4 memory bit?
+09:22:02	 From Yuan, Tianle : Should the record time of watching the video accurately? Cause I don't remember the accurate time before you post the new requirment of participation.
+09:22:47	 From Foshay, Isak : Qingxiao, pc+4 just adds 4 to the value of pc
+09:23:38	 From Huang, Tzu-Hao : For jump code, are 4 bits for opcode (Control), and 2 bits for ALU control, is it right?
+09:23:44	 From Yuan, Qingxiao : yes
+09:24:37	 From Yuan, Tianle : Thx
+09:25:31	 From Lin, Si Thu : How does the sign-extend unit change 16 bits input to 32 bits output?
+09:25:40	 From Li, Jia Yi : R-type, if shamt wasn’t used, then the instruction is only 27bits, what happen to the 5 bits from shamt?
+09:25:56	 From Bishop, Anthony Patrick : it just moves the most significant bit to the end
+09:26:11	 From Bishop, Anthony Patrick : and pads the space between
+09:29:08	 From Lin, Yu-Yen : someone asked How does the sign-extend unit change 16 bits input to 32 bits output?I'm curious about it too
+09:30:56	 From Lin, Yu-Yen : okay, thank you!
+09:31:05	 From Lin, Si Thu : Thank you so much
+09:36:28	 From Lin, Si Thu : This is a question about the Pseudo-Direct Addressing in a previous lecture. The Jump instruction has the addressing range of 2^28. I believe that the range does not start from the PC+4. The range should start from the upper 4 bits of (PC+4) concatenated by 28 zeros and end at the upper 4 bits of (PC+4) concatenated by 26 ones which in turn is followed by 00. Is this correct?
+09:38:25	 From Huang, Yingshi : Is there a list on canvas from where should we start to read the textbook?
+09:44:39	 From Huang, Yingshi : In the graph, there are three MUX. When do we know it is 2 bits for MUX, when is only 1 bit for MUX, and how do we know the order of the MUX?
+09:47:54	 From Huang, Yingshi : Is it mean MUX represents the bits for how many inputs and outputs?
+09:49:25	 From Chukwu, Kingsley Chukwuma : Is it possible to have 5:1 multiplexer
+09:49:50	 From Chukwu, Kingsley Chukwuma : Okay. Thank you.
+09:50:19	 From Insley, Matthew James : Thanks!
+09:50:21	 From Yuan, Tianle : Thx!!
+09:50:21	 From Jesmin, Sabrina : thanks
+09:50:28	 From (JT) Weng, Chia-Tse : Thank you
+09:50:28	 From Lin, Si Thu : Thank you so much.

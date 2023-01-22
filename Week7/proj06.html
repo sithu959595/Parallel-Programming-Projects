@@ -1,0 +1,369 @@
+<html>
+<head>
+
+<title>
+CS 475/575 Project #6
+</title>
+
+</head>
+
+<body background="../backgr.jpg">
+
+<center>
+<img src="../osu.jpg" align=center>
+<h2>CS 475/575 -- Spring Quarter 2020</h2>
+<h2>Project #6</h2>
+<h3>OpenCL Array Multiply, Multiply-Add, and Multiply-Reduce</h3>
+<h3>100 Points</h3>
+<h3>Due: May 29</h3>
+</center>
+
+
+<p>
+<hr size=4 >
+<p>
+
+<i>This page was last updated: May 27, 2020</i>
+
+<!--
+<p>
+<hr size=4>
+<p>
+
+<center>
+<img src="../underconstr.gif">
+<br>
+<font size=+2 color=#ff0000>
+<blink>
+<b>
+Under Construction:
+<br>
+This content is not final until you see this message go away!
+</b>
+</blink>
+</font>
+</center>
+-->
+
+
+
+<p>
+<hr size=4>
+<p>
+
+<font color=#ff0000>
+<b>
+Note:
+The flip machines do not have GPU cards in them, so OpenCL will not run there.
+If your own system has a GPU, you can use that.
+You can also use the DGX machine, but please be good about sharing it.
+</b>
+</font>
+
+<p>
+<hr size=4>
+<p>
+
+<h3>Introduction</h3>
+
+<p>
+There are many problems in scientific computing where you want to do arithmetic
+on multiple arrays of numbers
+(matrix manipulation, Fourier transformation, convolution, etc.).
+This project is in three parts:
+<ol>
+<li>
+Multiply two arrays together using OpenCL:
+<br>
+D[gid] = A[gid] * B[gid];
+<br>
+Benchmark it against both input array size (i.e., the global work size) and the local work size
+(i.e., number of work-items per work-group).
+<li>
+Multiply two arrays together and add a third using OpenCL:
+<br>
+D[gid] = ( A[gid] * B[gid] ) + C[gid];
+<br>
+Benchmark it against both input array size (i.e., the global work size) and the local work size
+(i.e., number of work-items per work-group).
+<li>
+Perform the same array multiply as in #1, but this time with a reduction:
+<br>
+Sum = summation{  A[:]*B[:] };
+<br>
+Benchmark that against input array size (i.e., the global work size).
+You can pick a local work size and hold that constant.
+</ol>
+
+<h3>Some Help</h3>
+
+<p>
+<a href="First.zip">Here is a Visual Studio solution for this,</a>
+
+<p>
+I have updated the PrintInfo code into a function.  You can get it
+<a href="printinfo.cpp">here.</a>
+It contains a function called PrintOpenclInfo( ).
+It also contains a function called SelectOpenclDevice( ) which selects
+what it thinks is the best system to run your OpenCL code on.
+
+
+<h3>Requirements:</h3>
+
+<ol>
+
+<p>
+<b>First, work on the Array Multiply and the Array Multiply-Add portions:</b>
+
+<p>
+<li>
+Start with the
+<a href="../Handouts/first.cpp">first.cpp</a>
+and
+<a href="../Handouts/first.cl">first.cl</a>
+files.
+That code already does array multiplication for one particular
+combination of global work size and local work size.
+
+<p>
+<li>
+<b>Helpful Hint:</b>
+The Array Multiply and the Array Multiply-Add can really be the same program.
+Write one single program that creates the 4 arrays.
+Pass A, B, and C into OpenCL, and return D.
+Then all you have to do between the Multiply and Multiply-Add tests is change one line
+in the .cl file.
+
+<p>
+<li>
+Make this all work for global work sizes in (at least) the range 1K to 8M,
+and local work sizes in (at least) the range 8 to 512,
+or up to the maximum work-group size allowed by your system.
+How you do this is up to you.
+Use enough values in those ranges to make good graphs.
+
+<p>
+<li>
+Use performance units that make sense.
+Joe Parallel used "MegaMultiplies Per Second" and
+"MegaMultiply-Adds Per Second".
+
+<p>
+<li>
+Make two graphs:
+<ol>
+<li>Multiply and Multiply-Add performance versus Global Dataset Size, with a series of colored Constant-Local-Work-Size curves
+<li>Multiply and Multiply-Add performance versus Local Work Size, with a series of colored Constant-Global-Dataset-Size curves
+</ol>
+
+<p>
+<li>
+Your commentary PDF should tell:
+<ol>
+<li>What machine you ran this on
+<li>Show the tables and graphs
+<li>What patterns are you seeing in the performance curves?
+<li>Why do you think the patterns look this way?
+<li>What is the performance difference between doing a Multiply and doing a Multiply-Add?
+<li>What does that mean for the proper use of GPU parallel computing?
+</ol>
+
+
+<p>
+<b>Then, write another version of the code that turns it into a Multiply+Reduce application.</b>
+
+<p>
+<li>
+Note that this will ultimately compute just a single floating point scalar value.
+
+<p>
+<li>
+Produce the product array on the GPU, and then do the reduction on it from the same kernel.
+
+<p>
+<li>
+Return an array, the same size as the number of work-groups.
+Each element of the array will have the sum from all the items in one work-group.
+Add up the elements of the array yourself.
+
+<p>
+<li>
+Try at last 3 different local work sizes, more if you want.
+Make it no smaller than 32.
+Make it no larger than 256.
+
+<p>
+<li>
+Vary the size of the input array from 1K to 8M.
+
+<p>
+<li>
+Plot another graph showing Multiply-reduction performance versus Input Array Size.
+
+<p>
+<li>
+Use performance units that make sense.
+Jane Parallel used "MegaMultiply-Reductions Per Second".
+
+<p>
+<li>
+To your PDF write-up add:
+
+<p>
+<ol>
+<li>Show this table and graph
+<li>What pattern are you seeing in this performance curve?
+<li>Why do you think the pattern looks this way?
+<li>What does that mean for the proper use of GPU parallel computing?
+</ol>
+
+</ol>
+
+
+<!--
+
+<p>
+<h3>Running OpenCL in Visual Studio</h3>
+
+<p>
+First, you will need the following files:
+<ol>
+<li><a href="../OpenclFiles/cl.h">cl.h</a>
+<li><a href="../OpenclFiles/cl_platform.h">cl_platform.h</a>
+<li>
+<a href="../OpenclFiles/OpenCL32.lib">OpenCL32.lib</a>
+or
+<a href="../OpenclFiles/OpenCL64.lib">OpenCL64.lib</a>
+</ol>
+
+<p>
+To enable OpenMP, which you need for timing:
+<br>
+Project &rarr; Properties &rarr; Configuration Properties &rarr; C/C++ &rarr; Language
+<br>
+and then change OpenMP support to "Yes (/openmp)"
+
+<p>
+To link the library:
+<br>
+Project &rarr; Properties &rarr; Configuration Properties &rarr; Linker &rarr; Additional Dependencies &rarr; &lt;Edit...&gt;
+<br>
+and then type either <b>OpenCL32.lib</b> or <b>OpenCL64.lib</b> in the box.
+
+<p>
+To make this easier, an entire Visual Studio solution has been zipped up in the file
+<a href="../OpenclFiles/First.zip">First.zip</a>
+
+-->
+
+
+<p>
+<h3>Running OpenCL in Linux</h3>
+
+<p>
+First, you will need the following files:
+<ol>
+<li><a href="../OpenclFiles/cl.h">cl.h</a>
+<li><a href="../OpenclFiles/cl_platform.h">cl_platform.h</a>
+<!--
+<li><a href="../OpenclFiles/libOpenCL.so">libOpenCL.so</a>
+-->
+</ol>
+
+<p>
+If you are on <i>rabbit</i> or the <i>DGX System</i>, compile, link, and run like this:
+<p>
+<b>
+g++ -o printinfo printinfo.cpp /usr/local/apps/cuda/cuda-10.1/lib64/libOpenCL.so.1.1 -lm -fopenmp
+<br>
+./printinfo
+</b>
+
+<p>
+If you are on your own system, change the library reference to whatever path
+your system has the library in.
+
+
+<p>
+<h3>Getting the right platform and device number:</h3>
+
+<p>
+Many of you now have multiple OpenCL-compatible platforms with multiple devices in your own systems.
+
+<p>
+The <b>first.cpp</b> code handles platforms and devices like this.
+It assumes that you have only one platform with only one device:
+
+<pre><tt>
+// get the platform id:
+
+cl_platform_id platform;
+status = clGetPlatformIDs( 1, &platform, NULL );
+if( status != CL_SUCCESS )
+	fprintf( stderr, "clGetPlatformIDs failed (2)\n" );
+
+// get the device id:
+
+cl_device_id device;
+status = clGetDeviceIDs( platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL );
+if( status != CL_SUCCESS )
+	fprintf( stderr, "clGetDeviceIDs failed (2)\n" );
+</tt></pre>
+
+<p>
+But, if you have more than one platform and one device, you need to figure out which device to use.
+The most general way to do it is to query everything, like the
+<a href="http://cs.oregonstate.edu/~mjb/cs575c/OpenclFiles/printinfo.cpp">
+printinfo.cpp source code
+</a>
+uses.
+
+<p>
+But, a simpler way is to run the <b>printinfo</b> program and figure out which platform and device you want to use.
+Look at the print-out and look for the graphics card you bought, not the internal one that came with the system.
+Write down which platform number it is on and what device number it is.
+
+<p>
+Let's say that you notice that you have two platforms and the graphics card is on the second platform and it is device #0.
+You would then change your code to say:
+
+<pre><tt>
+// get the platform id:
+
+cl_platform_id     Platform;
+cl_device_id       Device;
+
+cl_platform_id platforms[2];				// number of platforms you have
+status = clGetPlatformIDs( 2, platforms, NULL );	// get two platform id's
+if( status != CL_SUCCESS )
+	fprintf( stderr, "clGetPlatformIDs failed (2)\n" );
+Platform = platforms[1];				// use the second one
+
+// get the device id:
+
+cl_device_id devices[1];				// number of devices this platform has
+status = clGetDeviceIDs( platform, CL_DEVICE_TYPE_GPU, 1, devices, NULL );
+							// get one device id
+if( status != CL_SUCCESS )
+	fprintf( stderr, "clGetDeviceIDs failed (2)\n" );
+Device = devices[0];					// use the first one
+</tt></pre>
+
+
+<p>
+<h3>Grading:</h3>
+
+<p>
+<table border=1>
+<tr><th>Feature<th>Points
+<tr><td>Multiply table and graphs<td align=right>20
+<tr><td>Multiply-Add table and graphs<td align=right>20
+<tr><td>Multiply and Multiply-Add Commentary<td align=right>20
+<tr><td>Reduction tables and graphs<td align=right>20
+<tr><td>Reduction Commentary<td align=right>20
+<tr><th align=left>Potential Total<th align=right>100
+</table>
+
+
+</body>
+</html>

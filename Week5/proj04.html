@@ -1,0 +1,210 @@
+<html>
+<head>
+
+<title>
+CS 475/575 Project #4
+</title>
+
+</head>
+
+<body background="../backgr.jpg">
+
+<center>
+<img src="../osu.jpg" align=center>
+<h2>CS 475/575 -- Spring Quarter 2020</h2>
+<h2>Project #4</h2>
+<h3>Vectorized Array Multiplication/Reduction using SSE</h3>
+<h3>60 Points</h3>
+<h3>Due: May 11</h3>
+</center>
+
+
+<p>
+<hr size=4 >
+<p>
+
+<i>This page was last updated: April 12, 2020</i>
+
+
+<!--
+<p>
+<hr size=4>
+<p>
+
+<center>
+<img src="../underconstr.gif">
+<br>
+<font size=+2 color=#ff0000>
+<blink>
+<b> 
+Under Construction:
+<br>
+This content is not final until you see this message go away!
+</b>
+</blink>
+</font>
+</center>
+-->
+
+
+
+<p>
+<hr size=4>
+<p>
+
+<h3>Introduction</h3>
+
+<p>
+There are many problems in scientific and engineering computing where you want to multiply
+arrays of numbers together and add up all the multiplies to produce a single sum
+(Fourier transformation, convolution, autocorrelation, etc.):
+sum = &Sigma;A[i]*B[i]
+
+<p>
+This project is to test array multiplication/reduction usinf SIMD and non-SIMD.
+
+<p>
+<b>
+<font color=#008f00>
+For the "control groups" benchmarks, do not use OpenMP parallel for-loops.
+Just use straight C/C++ for-loops.
+In this project, we are only using OpenMP for the timing.
+</font>
+</b>
+
+<p>
+
+<h3>Requirements</h3>
+
+<ol>
+
+<p>
+<li>
+Use the supplied SIMD SSE intrinsics code to run an array multiplication/reduction timing experiment.
+Run the same experiment a second time using your own C/C++ array multiplication/reduction code.
+
+<p>
+<li>
+Use different array sizes from 1K to 8M.
+The choice of in-between values is up to you,
+but pick something that will make for a good graph.
+
+<p>
+<li>
+Run each array-size test a certain number of trials.
+Use the peak value for the performance you record.
+
+<p>
+<li>
+Create a table and a graph showing SSE/Non-SSE speed-up as a function of array size.
+Speedup in this case will be S = Psse/Pnon-sse = Tnon-sse/Tsse (P = Performance, T = Elapsed Time).
+
+<p>
+<li>
+Note: this is not a multithreading assignment, so you don't need to worry about a NUMT.
+Don't use any OpenMP-isms except for getting the timing.
+
+<p>
+<li>
+The Y-axis performance units in this case will be "Speed-Up", i.e., dimensionless.
+
+<p>
+<li>
+Parallel Fraction doesn't apply to SIMD parallelism, so don't compute one.
+
+<p>
+<li>
+Your commentary write-up (turned in as a separate PDF file) should tell:
+<ol>
+<li>What machine you ran this on
+<li>Show the table of performances for each array size and the corresponding speedups
+<li>Show the graph of SIMD/non-SIMD speedup versus array size (one curve only)
+<li>What patterns are you seeing in the speedups?
+<li>Are they consistent across a variety of array sizes?
+<li>Why or why not, do you think?
+</ol>
+
+</ol>
+
+
+<p>
+<h3>SSE SIMD code:</h3>
+
+<ul>
+
+<p>
+<li>
+You are certainly welcome to write your own if you want,
+but we have already written Linux SSE code to help you with this.
+
+<p>
+Find this code in the file:
+<a href="simd.intrinsics.cpp">simd.intrinsics.cpp</a>.
+
+<p>
+<li>
+Note that you are linking in the OpenMP library <i>only</i> because we are using it for timing.
+
+<!--
+<p>
+<li>
+<b>
+<font color=#ff0000>
+Because simd.p4.cpp uses assembly language, this code is not portable.
+I know for sure it works on flip, using gcc/g++ 4.8.5.
+You are welcome to try it other places, but there are no guarantees.
+It doesn't work on rabbit.
+Do not use "-O3".
+</font>
+</b>
+-->
+
+<p>
+<li>
+You can run the tests one-at-a-time, or you can script them
+by making the array size a <tt>#define</tt> that you set from outside
+the program.
+
+</ul>
+
+<!--
+<p>
+<h3>Warning!</h3>
+
+<p>
+<i>Do not use any optimization flags when compiling the simd.p4.cpp code.</i>
+It jumbles up the use of the registers.
+
+<p>
+<i>Do not use the icc or icpc compilers when compiling the simd.p4.cpp code.</i>
+It jumbles up the use of the registers.
+-->
+
+<p>
+<h3>+10 points Extra Credit</h3>
+
+<p>
+Combine multithreading and SIMD in one test.
+In this case, you will vary both the array size and the number of threads (NUMT).
+Show your table of performances.
+Produce a graph similar to the one on Slide #19 of the <i>SIMD Vector</i> notes, using your numbers.
+Add a brief discussion of what your curves are showing and why you think it is working this way.
+
+
+
+<p>
+<h3>Grading:</h3>
+
+<p>
+<table border=1>
+<tr><th>Feature<th>Points
+<tr><td>Array Multiply/Reduction perfermances and speedups<td align=right>20
+<tr><td>Array Multiply/Reduction speedup curve<td align=right>20
+<tr><td>Commentary<td align=right>20
+<tr><td>Extra Credit<td align=right>+10
+<tr><th align=left>Potential Total<th align=right>70
+</table>
+
+
+</body>
+</html>

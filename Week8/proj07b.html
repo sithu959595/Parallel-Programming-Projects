@@ -1,0 +1,409 @@
+<html>
+<head>
+
+<title>
+CS 475/575 Project #7B
+</title>
+
+</head>
+
+<body background="../backgr.jpg">
+
+<center>
+<img src="../osu.jpg" align=center>
+<h2>CS 475/575 -- Spring Quarter 2020</h2>
+<h2>Project #7B</h2>
+<h3>Autocorrelation using CPU OpenMP, CPU SIMD, and GPU {OpenCL or CUDA}</h3>
+<h3>110 Points</h3>
+<h3>Due: June 8 -- 23:59:59 -- <font color=#ff0000>No Bonus Days</font></h3>
+</center>
+
+
+<p>
+<hr size=4 >
+<p>
+
+<i>This page was last updated: May 17, 2020</i>
+
+
+<!--
+<p>
+<hr size=4>
+<p>
+
+<center>
+<img src="../underconstr.gif">
+<br>
+<font size=+2 color=#ff0000>
+<blink>
+<b>
+Under Construction:
+<br>
+This content is not final until you see this message go away!
+</b>
+</blink>
+</font>
+</center>
+-->
+
+
+
+<p>
+<hr size=4>
+<p>
+
+
+<h3>Introduction</h3>
+
+<p>
+I like Wikipedia's definition of Autocorrelation:
+<br>
+"Autocorrelation, also known as serial correlation, is the correlation of a signal with a delayed copy
+of itself as a function of delay.
+Informally, it is the similarity between observations as a function of the time lag between them."
+
+<p>
+What does this actually mean?
+It means you take a noisy signal, i.e., an array of length <b>Size</b> random-looking values sampled over time.
+You then multiply each array element by itself and add them up:
+<pre><tt>
+Sums[0] = A[0]*A[0] + A[1]*A[1] + ... + A[Size-1]*A[Size-1]
+</tt></pre>
+That will give you a large number because you are essentially taking the sum of the squares
+of the array elements.
+
+<p>
+Big whoop.  But, here's where it gets interesting.
+You then shift the array over one index and do the pairwise multiplication again.
+This gives a resulting value of
+<pre><tt>
+Sums[1] = A[0]*A[1] + A[1]*A[2] + ... + A[Size-1]*A[0]
+</tt></pre>
+
+<p>
+Now, if the signal is truly noisy, there will be positive and negative array values in
+there being multiplied together, giving both positive and negative products.
+Many of these will cancel each other out.
+So, by doing this shift before multiplying, you will get a much smaller sum.
+
+<p>
+You then shift over by 2 indices and do it again,
+<pre><tt>
+Sums[2] = A[0]*A[2] + A[1]*A[3] + ... + A[Size-2]*A[0] + A[Size-1]*A[1]
+</tt></pre>
+and do it again, and do it again, and so on.
+
+<p>
+(In the Sums[1] and Sums[2] lines of code above, notice the required wrap-around, back to A[0] and A[1].
+Clearly, the logic to do this isn't hard, but it would help our flat-out parallelism if we didn't
+have to do that.
+More on this later.)
+
+<p>
+What does this do?
+You then graph these resulting Sums[*] as a function of how much you shifted them over each time.
+If there is a secret harmonic frequency (i.e., a sine wave) hidden in the signal,
+there will be a maximum on that graph where the period of the harmonic signal is.
+And, there will be a minimum where half the period is.
+
+<p>
+The presence of that harmonic will make the Sums[*] array be all positives
+for a while, then all negatives, then all positives, etc.
+
+<p>
+Scientists and engineers use this to see if there are regular patterns in a
+thought-to-be-random signal.
+For example, you might be checking for
+60-cycle hum contamination, or
+intelligent life elsewhere in the universe, etc.
+
+<p>
+The problem is that these signals can be quite large.
+Your job in this project is to implement this using
+<ol>
+<li>OpenMP
+<li>SIMD on a CPU
+<li>{OpenCL or CUDA} on a GPU
+</ol>
+and compare the performances.
+
+<h3>Requirements:</h3>
+
+<ol>
+
+<p>
+<li>
+Read the signal file,
+<a href="signal.txt">which can be found here.</a>
+This file is text, so you can look at it if you want.
+The first line contains the number of numbers in the signal, <b>Size</b>.
+The next <b>Size</b> lines contain the values.
+
+<p>
+To read this in C:
+<tt><pre>
+#include &lt;stdio.h&gt;
+. . .
+int     Size;
+float * A;
+float * Sums;
+FILE *  fp;
+int     i;
+. . .
+fp = fopen( "signal.txt", "r" );
+if( fp == NULL )
+{
+	fprintf( stderr, "Cannot open file 'signal.txt'\n" );
+	exit( 1 );
+}
+fscanf( fp, "%d", &Size );
+A =     (float *)malloc( 2 * Size * sizeof(float) );
+Sums  = (float *)malloc( 1 * Size * sizeof(float) );
+for( i = 0; i < Size; i++ )
+{
+	fscanf( fp, "%f", &A[i] );
+	A[i+Size] = A[i];		// duplicate the array
+}
+fclose( fp );
+</pre></tt>
+or, in C++ (using the C I/O that I prefer -- fell free to use C++ I/O):
+<tt><pre>
+#include &lt;stdio.h&gt;
+. . .
+FILE *fp = fopen( "signal.txt", "r" );
+if( fp == NULL )
+{
+	fprintf( stderr, "Cannot open file 'signal.txt'\n" );
+	exit( 1 );
+}
+int Size;
+fscanf( fp, "%d", &Size );
+float *A =     new float[ 2*Size ];
+float *Sums  = new float[ 1*Size ];
+for( int i = 0; i < Size; i++ )
+{
+	fscanf( fp, "%f", &A[i] );
+	A[i+Size] = A[i];		// duplicate the array
+}
+fclose( fp );
+</pre></tt>
+
+<p>
+<li>
+A not-paralleled C/C++ way of doing the multiplying and summing would be:
+<pre><tt>
+for( int shift = 0; shift < Size; shift++ )
+{
+	float sum = 0.;
+	for( int i = 0; i < Size; i++ )
+	{
+		sum += A[i] * A[i + shift];
+	}
+	Sums[shift] = sum;	// note the "fix #2" from false sharing if you are using OpenMP
+}
+</tt></pre>
+
+<p>
+Note that this works because A was dimensioned twice the
+size as the number of signal values,
+and then two copies of the signal were placed in it.
+This allows you to do the autocorrelation in one set of multiplies instead of wrapping around.
+So, your program will really be doing:
+<pre><tt>
+Sums[0] = A[0]*A[0] + A[1]*A[1] + ... + A[Size-2]*A[Size-2] + A[Size-1]*A[Size-1]
+Sums[1] = A[0]*A[1] + A[1]*A[2] + ... + A[Size-2]*A[Size-1] + A[Size-1]*A[Size]
+Sums[2] = A[0]*A[2] + A[1]*A[3] + ... + A[Size-2]*A[Size]   + A[Size-1]*A[Size+1]
+. . .
+</tt></pre>
+
+<p>
+<li>
+Do this using <b>OpenMP parallelism</b>.
+Do it once for one thread.
+Do it once for more-than-one thread.
+
+<p>
+Remembering our not paralleled C/C++ way of doing the multiplying and summing,
+<pre><tt>
+for( int shift = 0; shift < Size; shift++ )
+{
+	float sum = 0.;
+	for( int i = 0; i < Size; i++ )
+	{
+		sum += A[i] * A[i + shift];
+	}
+	Sums[shift] = sum;	// note the "fix #2" from false sharing if you are using OpenMP
+}
+</tt></pre>
+<i>put the #pragma on the outer for-loop.</i>
+
+<p>
+<li>
+Do this using <b>CPU SIMD</b>.
+Remembering our not paralleled C/C++ way of doing the multiplying and summing,
+<pre><tt>
+for( int shift = 0; shift < Size; shift++ )
+{
+	float sum = 0.;
+	for( int i = 0; i < Size; i++ )
+	{
+		sum += A[i] * A[i + shift];
+	}
+	Sums[shift] = sum;	// note the "fix #2" from false sharing if you are using OpenMP
+}
+</tt></pre>
+you don't need to implement the inner for-loop ourselves -- that's what the SIMD replaces.
+Note that it is perfectly legal to do this:
+<pre><tt>
+	Sums[shift] = SimdMulSum( &A[0], &A[0+shift], Size );
+</tt></pre>
+because SimdMulSum( ) only wants array addresses -- it doesn't care where they are.
+
+<p>
+<li>
+Do this using <b>GPU {OpenCL or CUDA}</b>.
+Remembering our not paralleled C/C++ way of doing the multiplying and summing,
+<pre><tt>
+for( int shift = 0; shift < Size; shift++ )
+{
+	float sum = 0.;
+	for( int i = 0; i < Size; i++ )
+	{
+		sum += A[i] * A[i + shift];
+	}
+	Sums[shift] = sum;	// note the "fix #2" from false sharing if you are using OpenMP
+}
+</tt></pre>
+The outer for-loop is the collection of <i>gid</i>s that OpenCL/CUDA is creating for us,
+so we don't need to implement that outer for-loop ourselves.
+Do the inner for-loop for each gid.
+The value of <i>shift</i> is just the value of <i>gid</i>.
+<pre><tt>
+kernel
+void
+AutoCorrelate( global const float *dA, global float *dSums )
+{
+	int Size = get_global_size( 0 );	// the dA size is actually twice this big
+        int gid  = get_global_id( 0 );
+	int shift = gid;
+
+	float sum = 0.;
+	for( int i = 0; i < Size; i++ )
+	{
+		sum += dA[i] * dA[i + shift];
+	}
+	dSums[shift] = sum;
+</tt></pre>
+
+which would make the creation of the host data structures:
+
+<pre><tt>
+float *hA =     new float[ 2*Size ];
+float *hSums  = new float[ 1*Size ];
+</tt></pre>
+
+which would make the device data structures:
+<pre><tt>
+cl_mem dA =     clCreateBuffer( context, CL_MEM_READ_ONLY,  2*Size*sizeof(cl_float), NULL, &status );
+cl_mem dSums  = clCreateBuffer( context, CL_MEM_WRITE_ONLY, 1*Size*sizeof(cl_float), NULL, &status );
+</tt></pre>
+
+and make the kernel arguments:
+<pre><tt>
+status = clSetKernelArg( kernel, 0, sizeof(cl_mem), &dA );
+status = clSetKernelArg( kernel, 1, sizeof(cl_mem), &dSums  );
+</tt></pre>
+
+and make the global and local work sizes:
+<pre><tt>
+size_t globalWorkSize[3] = { Size,         1, 1 };
+size_t localWorkSize[3]  = { LOCAL_SIZE,   1, 1 };
+</tt></pre>
+
+Note that it is <i>really</i> important that the global data set size be set to <i>Size</i>,
+not <i>2*Size</i>.
+The amount of data we are producing is <i>Size</i>.
+The fact that we are computing with an A[ ] that is <i>2*Size</i> long is just a computational convenience.
+
+
+<p>
+<li>
+Scatterplot the autocorrelation Sums[*] vs. the shift.
+Even though there will be <b>Size</b> Sums[*] values,
+only scatterplot Sums[1] ... Sums[512].
+
+<p>
+There is a hidden sine-wave in the signal.
+Scatterplotting Sums[1] ... Sums[512] will be enough to reveal it.
+Don't worry -- if you have done everything correctly,
+it will be <i>really</i> obvious.
+
+<p>
+Don't include Sums[0] in the scatterplot.
+Sums[0] will be a very large number and will cause your auto-scaled vertical axis
+to have larger values on it than is good to view the hidden sine-wave pattern.
+
+<p>
+You only need to do this plotting once for the results of OpenMP, or SIMD, or {OpenCL or CUDA}.
+They should all be the same.
+
+<p>
+<li>
+Tell me what you think the secret sine wave's period is,
+i.e., what multiple of <i>shift</i> gives you a maximum in the Sums[*] scatterplot?
+
+<p>
+<li>
+Draw a bar chart showing the performance for your 1-thread OpenMP, your n-thread OpenMP,
+your SIMD, and your {OpenCL or CUDA}.
+Pick appropriate units.
+Make "faster" go up.
+
+<p>
+<li>
+Turn into <i>Teach</i>:
+<ol>
+
+<li>
+All your source code files (.c, .cpp, .cu, .cl).
+
+<li>
+Your commentary in a PDF file.
+</ol>
+
+<p>
+<li>
+Your commentary PDF should include:
+<ol>
+<li>What machines you ran this on
+<li>Show the Sums{1] ... Sums[512] vs. shift scatterplot
+<li>State what the hidden sine-wave period is,
+i.e., at what multiples of <i>shift</i> are you seeing maxima in the graph?
+<li>What patterns are you seeing in the performance bar chart?
+Which of the four tests runs fastest, next fastest, etc.?
+By a little, or by a lot?
+<li>Why do you think the performances work this way?
+</ol>
+
+</ol>
+
+
+<p>
+<h3>Grading:</h3>
+
+<p>
+<table border=1>
+<tr><th>Feature<th>Points
+<tr><td>1-thread OpenMP<td align=right>10
+<tr><td>n-threads OpenMP<td align=right>10
+<tr><td>SIMD<td align=right>15
+<tr><td>{OpenCL or CUDA}<td align=right>15
+<tr><td>Autocorrelation Sums[*] vs. shift graph<td align=right>15
+<tr><td>Correct sine-wave period<td align=right>10
+<tr><td>Performance bar chart<td align=right>15
+<tr><td>Commentary in the PDF file<td align=right>20
+<tr><th align=left>Potential Total<th align=right>110
+</table>
+
+</body>
+</html>

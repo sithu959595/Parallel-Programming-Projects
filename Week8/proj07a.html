@@ -1,0 +1,504 @@
+<html>
+<head>
+
+<title>
+CS 475/575 Project #7A
+</title>
+
+</head>
+
+<body background="../backgr.jpg">
+
+<center>
+<img src="../osu.jpg" align=center>
+<h2>CS 475/575 -- Spring Quarter 2020</h2>
+<h2>Project #7A</h2>
+<h3>OpenCL / OpenGL Particle System</h3>
+<h3>110 Points</h3>
+<h3>Due: June 8 -- 23:59:59 -- <font color=#ff0000>No Bonus Days</font></h3>
+</center>
+
+
+<p>
+<hr size=4 >
+<p>
+
+<i>This page was last updated: May 17, 2020</i>
+
+<!--
+<p>
+<hr size=4>
+<p>
+
+<center>
+<img src="../underconstr.gif">
+<br>
+<font size=+2 color=#ff0000>
+<blink>
+<b>
+Under Construction:
+<br>
+This content is not final until you see this message go away!
+</b>
+</blink>
+</font>
+</center>
+-->
+
+
+
+<p>
+<hr size=4>
+<p>
+
+
+<h3>Introduction</h3>
+
+<p>
+Particle systems are used in games, movies, etc. to depict phenomena such as 
+clouds, dust, fireworks, fire, explosions, water flow, sand, insects, wildebeests, etc.
+Once you know what they are, you can't stop seeing them.
+
+<p>
+To make a particle system work, you manipulate a collection of many
+3D particles to exhibit some behavior.
+(<a href="http://cs.oregonstate.edu/~mjb/cs491/Handouts/particlesystems.2pp.pdf">
+Look here
+</a>
+for more information.)
+
+<p>
+A bit of particle history: particle systems were first seen in the
+<a href="http://www.youtube.com/watch?v=Qe9qSLYK5q4">
+<i>Star Trek II: The Wrath of Khan</i> Genesis Demo.
+</a>
+(Don't laugh -- that sequence was animated almost 40 years ago!)
+
+<!--
+<p>
+We think of particle systems as being created digitally, like you will be doing.
+But recently, one was create analogly, like with
+<a href="PigeonParticles.pdf">LEDs attached to pigeons.</a>
+(No, really.)
+-->
+
+<p>
+In this project, you will use OpenCL and OpenGL together to make a cool particle system.
+(The degree of cool-ness is up to you.)
+
+
+<h3>Getting the Visual Studio solution:</h3>
+
+
+The file
+<a href="Particles2019Template.zip">Particles2019Template.zip</a>
+contains a complete Visual Studio 2019 solution for 1M particles,
+one sphere bumper, and no color changes.
+You need to add to these files to complete the project.
+The files you need to change are sample.cpp and particles.cl .
+You need to make a second bumper and apply some sort of color change during the animation.
+
+
+<h3>What the sample code does</h3>
+
+<p>
+The sample code already does the following:
+(this is included here if you want to follow the logic)
+
+<ol>
+
+<p>
+<li>
+Design your 3D environment.
+The particles need to start from somewhere.
+Where should that be?
+The particles need to start with initial velocities.
+What should those be?
+
+<p>
+<li>
+Create an OpenGL buffer object to hold the particles' XYZW positions as an array-of-structures.
+<br>
+Create an OpenGL buffer object to hold the particles' RGBA colors as an array-of-structures.
+<br>
+Create a C++ array-of-structures to hold the particles' XYZ velocities.
+
+<br>
+(OpenGL buffer objects are used for position and color, but not velocity.
+This is because OpenGL will need to use positions and colors in the drawing, but not the velocities.)
+
+<p>
+<li>
+Determine good starting values for all 3 data structures.
+<br>
+For the position and color buffers, use glMapBuffer( ) to send the values
+directly to the GPU.
+<br>
+The velocity array is a C++ array-of-structures, so just fill it using C++ code.
+
+<p>
+<tt><pre>
+glBindBuffer( GL_ARRAY_BUFFER, hPobj );
+struct xyzw *points = (struct xyzw *) glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+for( int i = 0; i < NUM_PARTICLES; i++ )
+{
+	points[i].x = Ranf( XMIN, XMAX );
+	points[i].y = Ranf( YMIN, YMAX );
+	points[i].z = Ranf( ZMIN, ZMAX );
+	points[i].w = 1.;
+}
+glUnmapBuffer( GL_ARRAY_BUFFER );
+
+
+glBindBuffer( GL_ARRAY_BUFFER, hCobj );
+struct rgba *colors = (struct rgba *) glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+for( int i = 0; i < NUM_PARTICLES; i++ )
+{
+	colors[i].r = Ranf( .3f, 1. );
+	colors[i].g = Ranf( .3f, 1. );
+	colors[i].b = Ranf( .3f, 1. );
+	colors[i].a = 1.;
+}
+glUnmapBuffer( GL_ARRAY_BUFFER );
+
+
+for( int i = 0; i < NUM_PARTICLES; i++ )
+{
+	hVel[i].x = Ranf( VMIN, VMAX );
+	hVel[i].y = Ranf(   0., VMAX );
+	hVel[i].z = Ranf( VMIN, VMAX );
+}
+</pre></tt>
+
+<p>
+<li>
+Create two OpenCL buffers from the position and color OpenGL buffers using calls to <b>clCreateFromGLBuffer( )</b>.
+You don't need to transmit the data to these OpenCL buffers -- it is already there
+in the OpenGL buffers that they are now linked to.
+
+<p>
+<li>
+For the velocity array, create an OpenCL buffer using <b>clCreateBuffer</b>
+and transmit the C++ array-of-structures to it
+like you've done before using <b>clEnqueueWriteBuffer( )</b>.
+
+<p>
+<li>
+Decide on a time step, <b>DT</b>.
+Your .cl program will need to know about it.
+Feel free to hard code it.
+
+<p>
+<li>
+Create a .cl OpenCL kernel that will advance all of the particles
+by the timestep <b>DT</b>.
+The sample code shows giving the .cl program access to the particles'
+positions and velocities.
+You will need to use these, and will need to update them.
+
+</ol>
+
+
+<h3>Requirements:</h3>
+
+<ol>
+
+<p>
+<li>
+Your 3D environment needs to have at least two "bumpers" in it for the particles to bounce off of.
+Each bumper needs to be geometrically designed such that,
+given a particle's XYZ, you can quickly tell if that particle
+is inside or outside the bumper.
+To get the bounce right, each bumper must be able to know its
+outward-facing surface normal everywhere.
+
+<p>
+Let's face it.
+Spheres are computationally "nice".
+In computer graphics, we <i>love</i> spheres.
+It is fast and straightforward to tell if something is inside or outside a sphere.
+Determining a normal vector for a point on the surface of a sphere is straightforward too.
+
+<p>
+It is OK to assume that the two bumpers are separate from each other,
+that is, a particle cannot be colliding with both at the same time.
+
+<p>
+<li>
+Your OpenCL .cl program must also handle the bounces off of your (>=2) bumpers.
+Be sure to draw these bumpers in your .cpp program so that you can see
+where they are.
+Again, spheres are "nice", and there are already functions available to draw them:
+<p>
+<pre><tt>
+glColor3f( .9f, .9f, 0. );	// yellow
+glPushMatrix( );
+        glTranslatef( -100., -800., 0. );	// sphere center
+        glutWireSphere( 600., 100, 100 );	// sphere radius, slices, stacks
+glPopMatrix( );
+</tt></pre>
+
+<p>
+And then do this again for the second sphere.
+
+
+<p>
+<li>
+The sample OpenCL code does not get the colors, change them, or put them back.
+But, <i>your</i> .cl kernel needs to dynamically change the color of the particles.
+You could base this on position, velocity, time, bounce knowledge, etc.
+<b><i>
+But, the color of each particle needs to change in some predictable way during the simulation.
+</i></b>
+<br>
+Note that OpenGL defines the red, green, and blue components of a color each as a
+floating-point value between 0. and 1.
+
+<p>
+<li>
+Leave the local work-group size at some fixed value.
+You can pull this out of your experience with Project #6, or you can
+experiment with the timing.
+
+<p>
+<li>
+Vary the total number of particles from something small-ish (~1024)
+to something big-ish (~1024*1024) in some increments that will look good on the graph.
+
+<p>
+<li>
+Measure the performance using units that make sense.
+Following our class tradition of inventing our own cool-sounding units of measure,
+Joe Parallel used "Particles Per Second", or "MegaParticles Per Second", or "GigaParticles Per Second".
+
+<p>
+<li>
+Make a table and a graph of Performance versus Total Number of Particles.
+Note that this will just be one graph with one curve.
+
+<p>
+<li>
+Make a video of your program in action.
+You can use any video-capture tool you want.
+If you have never done this before, I recommend Kaltura, for which OSU has a site license for you to use.
+You can get the Kaltura noteset by
+<a href="http://cs.oregonstate.edu/~mjb/cs557/Handouts/kaltura.1pp.pdf" target="_blank">clicking here.</a>
+If you use Kaltura, be sure your video is set to <b>Unlisted.</b>
+If it isn't, then we won't be able to see and it and we can't grade your project.
+
+<p>
+<li>
+Turn into <i>Teach</i>:
+<ol>
+
+<li>
+Your source code (.cpp and .cl).
+
+<li>
+Your commentary in a PDF file that is not inside a .zip file..
+
+</ol>
+
+<p>
+<li>
+Your commentary PDF should include:
+<ol>
+
+<li><b>A web link to the video showing your program in action</b>
+<li>What machine you ran this on
+<li>What predictable dynamic thing did you do with the particle colors (random changes are not good enough)
+<li>Include at least one screen capture image of your project in action
+<li>Show the table and graph
+<li>What patterns are you seeing in the performance curve?
+<li>Why do you think the patterns look this way?
+<li>What does that mean for the proper use of GPU parallel computing?
+</ol>
+
+</ol>
+
+
+<p>
+<h3>Advancing a Particle by DT</h3>
+
+<p>
+In the sample code, Joe Parallel wanted really badly to
+make the code look cleaner by treating (x,y,z) positions and velocities
+as single variables.
+To do this, he typedef'ed new variable types called
+point, vector, and color and took advantage
+of OpenCL's float4 variable type.
+(Unfortunately, there isn't a float3.)
+<br>
+He also stored a sphere definition as a float4: x, y, z, r.
+
+<pre><tt>
+typedef float4 point;		// x, y, z, 1.
+typedef float4 vector;		// vx, vy, vz, 0.
+typedef float4 color;		// r, g, b, a
+typedef float4 sphere;		// x, y, z, r
+
+constant sphere Sphere1 = (sphere)( -100., -800., 0.,  600. );
+</tt></pre>
+
+<p>
+Joe Parallel also stored the (x,y,z) acceleration of gravity in a float4
+and hard-coded a time step:
+
+<pre><tt>
+constant float4 G       = (float4) ( 0., -9.8, 0., 0. );
+constant float  DT      = 0.1;
+</tt></pre>
+
+
+<p>
+Now, given a particle's position <b>point p</b>
+and a particle's velocity <b>vector v</b>,
+here is how you advance it one time step:
+
+<pre><tt>
+kernel
+void
+Particle( global point *dPobj, global vector *dVel, global color *dCobj )
+{
+        int gid = get_global_id( 0 );		// particle number
+
+        point  p = dPobj[gid];
+        vector v = dVel[gid];
+        color  c = dCobj[gid];
+
+        point  pp = p + v*DT + G*(point)( .5*DT*DT );	// p'
+        vector vp = v + G*DT;				// v'
+        pp.w = 1.;
+        vp.w = 0.;
+</tt></pre>
+
+<p>
+Bouncing is handled by changing the velocity vector according
+to the outward-facing surface normal of the bumper
+at the point right before an impact:
+
+<pre><tt>
+        if(  IsInsideSphere( pp, Sphere1 )  )
+        {
+                vp = BounceSphere( p, v, Sphere1 );
+                pp = p + vp*DT + G*(point)( .5*DT*DT );
+        }
+</tt></pre>
+
+<p>
+And then do this again for the second sphere.
+
+<p>
+Assigning the new positions and velocities back into the global buffers
+happens like this:
+
+<pre><tt>
+        dPobj[gid] = pp;
+        dVel[gid]  = vp;
+	dCobj[gid] = ????;	// some change in color based on something
+</tt></pre>
+
+
+<p>
+Some utility functions you might find useful:
+
+<pre><tt>
+bool
+IsInsideSphere( point p, sphere s )
+{
+	float r = fast_length( p.xyz - s.xyz );
+	return  ( r < s.w );
+}
+
+
+vector
+Bounce( vector in, vector n )
+{
+	n.w = 0.;
+	n = fast_normalize( n );
+	vector out = in - n*(vector)( 2.*dot(in.xyz, n.xyz) );	// angle of reflection equals
+							        // angle of incidence
+	out.w = 0.;
+	return out;
+}
+
+
+vector
+BounceSphere( point p, vector in, sphere s )
+{
+	vector n;
+	n.xyz = fast_normalize( p.xyz - s.xyz );
+	n.w = 0.;
+	return Bounce( in, n );
+}
+</tt></pre>
+
+<p>
+<h3>Make this Program Your Own</h3>
+
+<p>
+There is a constant character string near the top of the program
+called <b>WINDOWTITLE</b> where you set the string that goes in the graphics 
+window title bar.
+Change <i>Joe Parallel</i> to your name.
+
+
+<p>
+<h3>Are you Getting an Error Message that says something about "UTF-8"?</h3>
+
+In the fopen call in the InitCL( ) function, change:
+<pre><tt>
+FILE *fp = fopen( CL_FILE_NAME, "r" );
+</tt></pre>
+to:
+<pre><tt>
+FILE *fp = fopen( CL_FILE_NAME, "rb" );
+</tt></pre>
+
+
+<p>
+This is the problem where Windows text editors put 2 marks at the end of a text line
+instead of the expected one mark.
+
+<p>
+<h3>Determining Platform and Device</h3>
+
+<p>
+The sample code includes code from the <i>printinfo</i> program.
+This will show what OpenCL capabilities are on your system.
+The code will also attempt to pick the best OpenCL environment.
+Feel free to change this if you think it has picked the wrong one.
+
+
+
+
+<p>
+<h3>Seeing Joe Parallel's Animation</h3>
+
+<p>
+<a href="particles.mp4">Click here</a> to see Joe Parallel's animation.
+<br>
+(It might work better to right click on the link and store the mp4 file locally
+and run it from there.)
+
+<p>
+<h3>Grading:</h3>
+
+<p>
+<table border=1>
+<tr><th>Feature<th>Points
+<tr><td>Convincing particle motion<td align=right>10
+<tr><td>Bouncing from at least two bumpers<td align=right>20
+<tr><td>Predictable dynamic color changes (random changes are not good enough)<td align=right>20
+<tr><td>Performance table and graph<td align=right>30
+<tr><td>Commentary in the PDF file<td align=right>30
+<tr><th align=left>Potential Total<th align=right>110
+</table>
+
+<p>
+<b>Note: The motion, bouncing, and colors of the particles needs to be demonstrated
+with a link to a video.
+If it a Kaltura video, be sure it has been set to <i>Unlisted</a>.</b>
+
+</body>
+</html>
